@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wanderlust</title>
+</head>
+<body>
+    <% layout("/layout/biolerplate") %>
+    <div class="row mt-3">
+        <div class="col-8 offset-2 ">
+           
+    <h3>create a new listing</h3>
+<form  method="post" action="/listing"novalidate class="needs-validation"  enctype="multipart/form-data">
+        <div class="mb-3" >
+        <lable for="title" class="form-label">Title</lable>
+        <input name="listing[title]" placeholder="Add a catchy title" type="text" class="form-control" required>
+        <div class="valid-feedback">Title looks good!</div>
+        <div class="invalid-feedback">title should be valid!</div>
+    </div>
+    
+    <div class="mb-3" >
+        <lable for="description" class="form-label">Description</lable>
+        <textarea name="listing[description]"class="form-control" required> </textarea>
+        <div class="invalid-feedback">description should be valid!</div>
+    </div >
+       <div class="mb-3" >
+        <lable for="Image" class="form-label">Upload Listing Image </lable>
+        <input name="listing[Image]" placeholder="enter image url/link" type="file" class="form-control"required>
+    </div>
+    <div class="row">
+       <div class="mb-3 col-md-4" >
+        <lable for="price" class="form-label">Price</lable>
+        <input name="listing[price]" placeholder="1200" type="number" class="form-control"required >
+        <div class="invalid-feedback">price should be valid!</div>
+    </div>
+       <div class="mb-3 col-md-8" >
+        <lable for="location" class="form-label">Location</lable>
+        <input name="listing[location]" placeholder="Jaipur,Rajasthan" type="text" class="form-control" required>
+        <div class="invalid-feedback">location should be valid!</div>
+    </div>
+</div>
+        <div class="mb-3" >
+            <lable for="country" class="form-label">Country</lable>
+        <input name="listing[country]" placeholder="India" type="text" class="form-control" required>
+        <div class="invalid-feedback">country should be valid!</div>
+    </div>
+    <div class="mb-3">
+        <lable for="mapsrc" class="form-label">Enter Map source code </lable>
+        <input name="listing[mapsrc]" placeholder="enter location url/link" type="url" class="form-control"required>
+        
+    </div>
+        
+        <button class="btn btn-dark add-btn mt-3">Add</button>
+       </form>
+</div>
+</div>
+</body>
+</html>
