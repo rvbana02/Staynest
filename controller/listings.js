@@ -29,6 +29,25 @@ module.exports.showListing=async(req,res,next)=>{
     console.log(listings);
     res.render("listing/show.ejs",{listings});
     };
+   
+
+module.exports.booking=async(req,res)=>{
+    let {id} =req.params;
+const listings= await listing.findById(id);
+if(!listings){
+    req.flash("error","listing you requested does not exist!");
+    res.redirect("/listing");
+}
+
+    res.render("listing/book.ejs",{listings});
+}
+module.exports.booksucess=async(req,res)=>{
+        const { checkIn, checkOut, guests } = req.body;
+        // Save booking details logic here (to DB or session)
+        req.flash("success", "Booking confirmed!");
+        res.redirect(`/listing/${req.params.id}`);
+    }
+
 
 module.exports.createlisting=async(req,res,next)=>{
     let url=req.file.path;

@@ -77,31 +77,30 @@
       <div><i class="fa-solid fa-sailboat"></i></div>
       <p>Boats</p>
      </div>
-     <div class="tax-toggle">
-      <div class="form-check-reverse form-switch">
-        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-        <label class="form-check-label" for="flexSwitchCheckDefault">Display total after taxes</label>
-      </div>
-     </div>
     </div>
+   
+    
     <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
-      <% for(let listings of alllisting){%>
-        <a href="/listing/<%=listings._id%>" class="listing-link">
-        <div class="card col listing-card" >
-            <img src="<%=listings.Image.url%>" class="card-img-top" alt="listing_image" style="height: 20rem">
-            <div class="card-img-overlay"></div>
-            <div class="card-body">
-              <p class="card-text">
-                <b><%=listings.title%></b>
-                <br>
-                &#x20B9; <%=listings.price%>/night
-                <i class="tax-info"> &nbsp; &nbsp;+18% GST</i>
-              </p>
-              
+      <% if (alllisting.length === 0) { %>
+        <div class="text-center mt-4">
+          <h3>No results found for "<%= q %>"</h3>
+        </div>
+      <% } else { %>
+        <% for(let listings of alllisting) { %>
+          <a href="/listing/<%= listings._id %>" class="listing-link">
+            <div class="card col listing-card">
+              <img src="<%= listings.Image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem">
+              <div class="card-img-overlay"></div>
+              <div class="card-body">
+                <p class="card-text">
+                  <b><%= listings.title %></b><br>
+                  ₹ <%= listings.price %>/night
+                </p>
+              </div>
             </div>
-          </div>
-        </a>
-          <%  }%> 
+          </a>
+        <% } %>
+      <% } %>
     </div>
     
 

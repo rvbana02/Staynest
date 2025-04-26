@@ -19,9 +19,7 @@ const passport=require("passport");
 const LocalStrategy=require("passport-local");
 const User=require("./model/user.js");
 
-//const mongoose_url="mongodb://127.0.0.1:27017/wanderlust";
 const dburl=process.env.ATLASDB_URL;
-console.log("DB URL:", dburl);
 
 main().then(()=>{
 console.log("connected to db");
@@ -96,6 +94,10 @@ app.get("/demouser",async(req,res)=>{
 
     let registeredUser=await User.register(fake_user,"hello world");
     res.send(registeredUser);
+});
+
+app.get("/",async(req,res)=>{
+ res.render("home.ejs",);
 });
 
 app.use("/listing" ,listingsRouter);

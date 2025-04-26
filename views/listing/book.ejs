@@ -1,0 +1,24 @@
+<% layout("/layout/biolerplate") %>
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Book Your Stay</h2>
+  
+  <form action="/listing/<%= listings._id %>/book" method="POST">
+    <div class="mb-3">
+      <label for="checkIn" class="form-label">Check-in Date:</label>
+      <input type="date" class="form-control" id="checkIn" name="checkIn" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="checkOut" class="form-label">Check-out Date:</label>
+      <input type="date" class="form-control" id="checkOut" name="checkOut" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="guests" class="form-label">Number of Guests:</label>
+      <input type="number" class="form-control" id="guests" name="guests" min="1" max="10" required>
+    </div>
+ 
+    <button type="submit" class="btnbook w-100">Confirm Booking</button>
+  </form>
+</div>
+

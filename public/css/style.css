@@ -1,55 +1,57 @@
-body{
- display: flex;
- flex-direction: column;
- min-height: 100vh;   
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;   
+    background-color: #f9f9f9;
+    padding-bottom: 3rem;
 }
 
-.container{
-    flex:1;
+.container {
+    flex: 1;
 }
 
-/*navbar*/
-.navbar{
+/* Navbar */
+.navbar {
     height: 5rem;
     background-color: white;
 }
 
-.fa-compass{
+.fa-compass {
     color: #fe424d;
     font-size: 2rem;
 }
 
-.nav-link{
+.nav-link {
     color: #222222 !important;
+    border: #222222 solid 2px;
+    border-radius: 50%;
 }
 
-/*footer*/
-
-.f-info-links a{
+/* Footer */
+.f-info-links a {
     text-decoration: none;
     color: #222222;
 }
 
-.f-info-links a:hover{
+.f-info-links a:hover {
     text-decoration: underline;
 }
+
 .f-info-links,
 .f-info-socials,
-.f-info-brand{
+.f-info-brand {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-
-.f-info-socials i{
+.f-info-socials i {
     font-size: 1.2rem;
     margin-right: 1rem;
 }
 
-
-.f-info{
+.f-info {
     text-align: center;
     background-color: #ebebeb;
     display: flex;
@@ -57,65 +59,157 @@ body{
     flex-wrap: wrap;
     justify-content: center;
     align-items: space-evenly;
+    margin-top: 3rem; 
 }
 
-
-/*cards*/
-.listing-card{
+/* Cards */
+.listing-card {
     border: none !important;
     margin-bottom: 2rem;
 }
 
-.card-img-top{
+.card-img-top {
     border-radius: 1rem !important;
     width: 100% !important;
+    height: 350px;
     object-fit: cover;
 }
 
-.card-body{
-    padding: 0 !important;
+.card-body {
+    padding: 1rem !important;
 }
 
-.card-text{
+.card-text {
     font-weight: 400 !important;
 }
 
-.listing-link{
+.listing-link {
     text-decoration: none;
 }
 
-/*card effect*/
+/* Show page card */
+.show-card {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    padding: 1.5rem;
+    background-color: #fff;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+}
 
-.card-img-overlay{
+/* Buttons area */
+.btns {
+    display: flex;
+    flex-direction: row;
+    justify-content:right;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+/* Edit button */
+.edit {
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #fe424d;
+    color: white;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.edit:hover {
+    background-color: #e43d45;
+}
+
+.book{
+    background-color: #fe424d !important;
+    color: white;
+    border: none !important;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    transition: background-color 0.3s ease;
+    width: 200px;
+    height: 50px;
+    margin-top: auto;
+    position: static;
+    left: 100%;
+}
+ 
+.btnbook{
+    background-color: #fe424d !important;
+    color: white;
+    border: none !important;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+
+/* Delete button */
+.delete-btn {
+    background-color: #fe424d !important;
+    color: white;
+    border: none !important;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    transition: background-color 0.3s ease;
+    width: 200px;
+    height: 50px;
+    margin-top: auto;
+}
+
+.delete-btn:hover {
+    background-color: #e43d45 !important;
+}
+
+/* Card overlay effect */
+.card-img-overlay {
     opacity: 0;
 }
 
-.card-img-overlay:hover{
+.card-img-overlay:hover {
     opacity: 0.2;
     background-color: white;
 }
 
-/*new page*/
-
-.add-btn{
-    background-color: #fe424d !important ;
+/* Add and edit page buttons */
+.add-btn, .edit-btn {
+    background-color: #fe424d !important;
     border: none !important;
 }
 
-/*edit page*/
-
-.edit-btn{
-    background-color: #fe424d !important ;
-    border: none !important;
+/* Review Section */
+textarea.form-control {
+    border-radius: 0.5rem;
+    resize: vertical;
 }
 
-.delete-btn{
-    background-color: #fe424d !important ;
-    border: none !important;
+.starability-slot label {
+    cursor: pointer;
+    margin-right: 6px;
 }
 
-.edit{
-    text-decoration: none;
-    font-size: large;
-   
+/* Review card */
+.review-card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    background-color: #fff;
+    margin-bottom: 1.5rem;
+}
+
+/* Iframe styling */
+iframe {
+    border-radius: 1rem;
+    margin-top: 1rem;
+    width: 100%;
+    height: 450px;
+    border: none;
+    margin-top: 2rem;
+}
+
+/* Utility */
+hr {
+    border-top: 1px solid #ccc;
+    margin: 2rem 0;
 }
