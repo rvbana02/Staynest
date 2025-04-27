@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>wanderlut</title>
+    <title>STAYNEST</title>
 </head>
 <body>
     <% layout("/layout/biolerplate") %>
     <div class="row mt-3">
         <div class="col-8 offset-2"> 
-    <h3>Edit new listing</h3>
+    <h3>Edit your Nest</h3>
     <form  method="post"action="/listing/<%=listings._id%>?_method=put" novalidate class="needs-validation" enctype="multipart/form-data">
         <div class="mb-3">
             <lable for="title" class="form-label">Title</lable>
@@ -22,11 +22,11 @@
        <div class="invalid-feedback">please enter short description!</div>
     </div>
     <div class="mb-3  card row row-cols-lg-3 row-cols-md-2 "> 
-        Original Listing Image <br>
+        Original Nest Image <br>
         <img src="<%= originalImageUrl %>" alt="">
      </div >
        <div class="mb-3"> 
-       <lable for="Image" class="form-label">upload listing image</lable>
+       <lable for="Image" class="form-label">Upload Nest Image</lable>
         <input name="listing[Image]"  type="file" class="form-control" >
        
         <div class="invalid-feedback">please enter a valid link!</div>
