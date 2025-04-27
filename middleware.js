@@ -9,7 +9,7 @@ const {reviewSchema}=require("./schema.js");
 module.exports.isloggedin=(req,res,next)=>{
     if(!req.isAuthenticated()){
         req.session.redirecturl=req.originalUrl;
-        req.flash("error","you must logged into create listings!");
+        req.flash("error","you must logged into post your Nest!");
        return res.redirect("/login");
     } 
     next();
@@ -27,7 +27,7 @@ module.exports.isowner=async(req,res,next)=>{
     let {id} =req.params;
     let listings= await listing.findById(id);
     if(!listings.owner._id.equals(res.locals.currUser._id)){
-      req.flash("error","you are not the owner of this listing");
+      req.flash("error","you are not the owner of this Nest");
       return res.redirect(`/listing/${id}`);
     }
     next();
