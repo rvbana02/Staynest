@@ -36,10 +36,10 @@
 
         <% if (currUser && listings.owner._id.equals(currUser._id)) { %>
            
-                <a href="/listing/<%= listings._id %>/edit" class="btn btn-outline-dark">Edit this list</a>
+                <a href="/listing/<%= listings._id %>/edit" class="btn btn-outline-dark">Edit this Nest</a>
                 <div class="btns">
                 <form method="POST" action="/listing/<%= listings._id %>?_method=DELETE">
-                    <button class="btn btn-dark delete-btn ">Delete this list</button>
+                    <button class="btn btn-dark delete-btn ">Delete this Nest</button>
                 </form>
             </div>
             <% } %>
