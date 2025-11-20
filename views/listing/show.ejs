@@ -9,8 +9,36 @@
     </div>
 
     <div class="card show-card col-md-8 mx-auto listing-card">
-        <img src="<%= listings.Image.url %>" class="card-img-top show-img" alt="listing_image">
+        <div id="listingCarousel" class="carousel slide" data-bs-ride="carousel">
 
+            <div class="carousel-inner">
+                <% listings.images.forEach((img, index) => { %>
+                    <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                        <img src="<%= img.url %>" class="d-block w-100 rounded" alt="Image">
+                    </div>
+                <% }) %>
+            </div>
+        
+            <button class="carousel-control-prev" type="button" data-bs-target="#listingCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+        
+            <button class="carousel-control-next" type="button" data-bs-target="#listingCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        
+            <div class="carousel-indicators">
+                <% listings.images.forEach((img, index) => { %>
+                    <button type="button"
+                        data-bs-target="#listingCarousel"
+                        data-bs-slide-to="<%= index %>"
+                        class="<%= index === 0 ? 'active' : '' %>">
+                    </button>
+                <% }) %>
+            </div>
+        
+        </div>
+        
         <dl class="form-control mt-3">
             <p class="card-text">
                 <dt><i class="fa-solid fa-user"></i> Owned by:</dt>

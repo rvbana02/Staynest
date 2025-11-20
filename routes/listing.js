@@ -1,64 +1,77 @@
-const express=require("express");
-const router=express.Router();
-const wrapAsync=require("../utils/wrapAsync.js");
-const listing=require("../model/listing.js");
-const{isloggedin,isowner,validatelisting}=require("../middleware.js");
-const listingcontroller=require("../controller/listings.js");
-const multer=require("multer");
-const{storage}=require("../cloudConfig.js");
-const upload=multer({storage});
+const express = require("express");
+const router = express.Router();
+const wrapAsync = require("../utils/wrapAsync.js");
+const Listing = require("../model/listing.js");
+const { isloggedin, isowner, validatelisting } = require("../middleware.js");
+const listingcontroller = require("../controller/listings.js");
 
+const multer = require("multer");
+const { storage } = require("../cloudConfig.js");
+const upload = multer({ storage });
 
-
+// -------------------------------
+// ROUTE: /
+// -------------------------------
 router.route("/")
-//index route
-.get(wrapAsync(listingcontroller.index ))
-//create route
-.post(isloggedin,upload.single("listing[Image]"),validatelisting,wrapAsync(listingcontroller.createlisting));
+  // INDEX ROUTE
+  .get(wrapAsync(listingcontroller.index))
+  
+  // CREATE ROUTE (MULTIPLE IMAGES)
+  .post(
+    isloggedin, 
+    upload.array("listing[images]", 10),   // <-- UPDATED
+    validatelisting,
+    wrapAsync(listingcontroller.createlisting)
+  );
 
+// NEW ROUTE
+router.get("/new", isloggedin, listingcontroller.rendernewform);
 
-//new route
-router.get("/new",isloggedin,listingcontroller.rendernewform);
-
-//search route
+// SEARCH ROUTE
 router.get("/search", async (req, res) => {
-    const query = req.query.q;
-    const alllisting = await listing.find({
-        $or: [
-            { title: { $regex: query, $options: "i" } },
-            { description: { $regex: query, $options: "i" } },
-            { location: { $regex: query, $options: "i" } },
-            { price: isNaN(query) ? undefined : Number(query) }
-        ]
-    }).exec();
-    res.render("listing/index.ejs", { alllisting, q: query });
+  const query = req.query.q;
+  const alllisting = await Listing.find({
+    $or: [
+      { title: { $regex: query, $options: "i" } },
+      { description: { $regex: query, $options: "i" } },
+      { location: { $regex: query, $options: "i" } },
+      { price: isNaN(query) ? undefined : Number(query) }
+    ]
   });
 
-  //privacy route
-  router.get("/privacy", (req, res) => {
-    res.render("listing/privacy.ejs");
+  res.render("listing/index.ejs", { alllisting, q: query });
 });
 
+// PRIVACY ROUTE
+router.get("/privacy", (req, res) => {
+  res.render("listing/privacy.ejs");
+});
 
+// -------------------------------
+// ROUTE: /:id
+// -------------------------------
 router.route("/:id")
-//show route
-.get(wrapAsync(listingcontroller.showListing ))
-//update route
-.put(isloggedin,isowner,upload.single("listing[Image]"),validatelisting,wrapAsync( listingcontroller.updatelisting))
-//delete route
-.delete(isloggedin,isowner,wrapAsync( listingcontroller.deletelisting));
+  // SHOW ROUTE
+  .get(wrapAsync(listingcontroller.showListing))
+  
+  // UPDATE ROUTE (MULTIPLE IMAGES + DELETE)
+  .put(
+    isloggedin,
+    isowner,
+    upload.array("listing[images]", 10),   // <-- UPDATED
+    validatelisting,
+    wrapAsync(listingcontroller.updatelisting)
+  )
 
+  // DELETE ROUTE
+  .delete(isloggedin, isowner, wrapAsync(listingcontroller.deletelisting));
 
-
-//book route
+// BOOK ROUTE
 router.route("/:id/book")
-.get(isloggedin,wrapAsync(listingcontroller.booking))
-.post(wrapAsync(listingcontroller.booksucess));
+  .get(isloggedin, wrapAsync(listingcontroller.booking))
+  .post(wrapAsync(listingcontroller.booksucess));
 
+// EDIT ROUTE
+router.get("/:id/edit", isloggedin, isowner, wrapAsync(listingcontroller.rendereditform));
 
-//edit route
-router.get("/:id/edit",isloggedin,isowner, wrapAsync(listingcontroller.rendereditform ));
-
-
-
-module.exports=router;
+module.exports = router;
