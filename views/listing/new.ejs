@@ -24,10 +24,18 @@
         <textarea name="listing[description]"class="form-control" required> </textarea>
         <div class="invalid-feedback">description should be valid!</div>
     </div >
-       <div class="mb-3" >
-        <lable for="Image" class="form-label">Upload Nest Image </lable>
-        <input name="listing[Image]" placeholder="Enter Image Url/Link" type="file" class="form-control"required>
+    <div class="mb-3">
+        <label for="images" class="form-label">Upload Nest Images</label>
+        <input 
+            name="listing[images]" 
+            type="file" 
+            class="form-control"
+            multiple
+            required
+        >
+        <small class="text-muted">You can upload multiple images for your listing.</small>
     </div>
+    
     <div class="row">
        <div class="mb-3 col-md-4" >
         <lable for="price" class="form-label">Price</lable>

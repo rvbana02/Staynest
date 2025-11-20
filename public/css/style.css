@@ -5,6 +5,10 @@ body {
     background-color: #f9f9f9;
     padding-bottom: 3rem;
 }
+.carousel-item img {
+    height: 400px;
+    object-fit: cover;
+}
 
 .container {
     flex: 1;

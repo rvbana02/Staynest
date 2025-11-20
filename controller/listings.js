@@ -1,102 +1,116 @@
-const listing=require("../model/listing.js");
+const Listing = require("../model/listing.js");
+const { cloudinary } = require("../cloudConfig.js");
 
-
-module.exports.index=async(req,res,next)=>{
-    const alllisting= await listing.find({});
-    res.render("listing/index.ejs",{alllisting});
+// INDEX
+module.exports.index = async (req, res) => {
+    const alllisting = await Listing.find({});
+    res.render("listing/index.ejs", { alllisting });
 };
 
-module.exports.rendernewform=(req,res)=>{
+// NEW FORM
+module.exports.rendernewform = (req, res) => {
     res.render("listing/new.ejs");
-    
 };
 
+// SHOW LISTING
+module.exports.showListing = async (req, res) => {
+    let { id } = req.params;
+    const listings = await Listing.findById(id)
+        .populate({
+            path: "reviews",
+            populate: { path: "author" },
+        })
+        .populate("owner");
 
-module.exports.showListing=async(req,res,next)=>{
-    let {id} =req.params;
-    const listings= await listing.findById(id)
-    .populate({
-        path:"reviews",
-        populate:{
-            path:"author",
-        },
-    })
-    .populate("owner");
-    if(!listings){
-        req.flash("error","listing you requested does not exist!");
-        res.redirect("/listing");
-    }
-    console.log(listings);
-    res.render("listing/show.ejs",{listings});
-    };
-   
-
-module.exports.booking=async(req,res)=>{
-    let {id} =req.params;
-const listings= await listing.findById(id);
-if(!listings){
-    req.flash("error","listing you requested does not exist!");
-    res.redirect("/listing");
-}
-
-    res.render("listing/book.ejs",{listings});
-}
-module.exports.booksucess=async(req,res)=>{
-        const { checkIn, checkOut, guests } = req.body;
-        // Save booking details logic here (to DB or session)
-        req.flash("success", "Booking confirmed!");
-        res.redirect(`/listing/${req.params.id}`);
+    if (!listings) {
+        req.flash("error", "Listing you requested does not exist!");
+        return res.redirect("/listing");
     }
 
+    res.render("listing/show.ejs", { listings });
+};
 
-module.exports.createlisting=async(req,res,next)=>{
-    let url=req.file.path;
-    let filename=req.file.filename;
-    const newlisting= new listing(req.body.listing);  
-    newlisting.owner=req.user._id;  
-    newlisting.Image={url,filename} ; 
-    
-   await newlisting.save();
-   req.flash("success","New listing created!");
-   
-   res.redirect("/listing");
- };
+// BOOKING
+module.exports.booking = async (req, res) => {
+    let { id } = req.params;
+    const listings = await Listing.findById(id);
 
+    if (!listings) {
+        req.flash("error", "Listing you requested does not exist!");
+        return res.redirect("/listing");
+    }
 
-module.exports.rendereditform =async(req,res,next)=>{
-    let {id} =req.params;
-const listings= await listing.findById(id);
-if(!listings){
-    req.flash("error","listing you requested does not exist!");
+    res.render("listing/book.ejs", { listings });
+};
+
+module.exports.booksucess = async (req, res) => {
+    req.flash("success", "Booking confirmed!");
+    res.redirect(`/listing/${req.params.id}`);
+};
+
+// CREATE LISTING (MULTIPLE IMAGES)
+module.exports.createlisting = async (req, res) => {
+    const newlisting = new Listing(req.body.listing);
+    newlisting.owner = req.user._id;
+
+    // Save Multiple Images
+    newlisting.images = req.files.map(f => ({
+        url: f.path,
+        filename: f.filename
+    }));
+
+    await newlisting.save();
+    req.flash("success", "New listing created!");
     res.redirect("/listing");
-}
-
-let originalImageUrl=listings.Image.url;
-originalImageUrl=originalImageUrl.replace("/upload","/upload/h_300,w_250");
-res.render("listing/edit.ejs",{listings,originalImageUrl});
 };
 
+// EDIT FORM
+module.exports.rendereditform = async (req, res) => {
+    let { id } = req.params;
+    const listings = await Listing.findById(id);
 
+    if (!listings) {
+        req.flash("error", "Listing you requested does not exist!");
+        return res.redirect("/listing");
+    }
 
-module.exports.updatelisting=async(req,res,next)=>{
-    let {id} =req.params;
-    
-  let Listing= await listing.findByIdAndUpdate(id,{...req.body.listing});
-  if(typeof req.file != "undefined"){
-  let url=req.file.path;
-    let filename=req.file.filename;
-Listing.Image={url,filename};
-await Listing.save();
-  }
-   req.flash("success","listing updated!");
-   res.redirect(`/listing/${id}`);
+    res.render("listing/edit.ejs", { listings });
 };
 
+// UPDATE LISTING (ADD NEW IMAGES + DELETE OLD ONES)
+module.exports.updatelisting = async (req, res) => {
+    let { id } = req.params;
 
-module.exports.deletelisting=async(req,res,next)=>{
-    let {id} =req.params;
-    let deletedlist =await listing.findByIdAndDelete(id);
-    console.log(deletedlist);
-    req.flash("success"," listing deleted!");
+    const listings = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+
+    // Add new images
+    const newImages = req.files.map(f => ({
+        url: f.path,
+        filename: f.filename
+    }));
+    listings.images.push(...newImages);
+
+    // Delete old images
+    if (req.body.deleteImages) {
+        for (let filename of req.body.deleteImages) {
+            await cloudinary.uploader.destroy(filename);
+        }
+
+        await listings.updateOne({
+            $pull: { images: { filename: { $in: req.body.deleteImages } } }
+        });
+    }
+
+    await listings.save();
+    req.flash("success", "Listing updated!");
+    res.redirect(`/listing/${id}`);
+};
+
+// DELETE LISTING
+module.exports.deletelisting = async (req, res) => {
+    let { id } = req.params;
+    const deletedlist = await Listing.findByIdAndDelete(id);
+
+    req.flash("success", "Listing deleted!");
     res.redirect("/listing");
 };
