@@ -28,20 +28,27 @@ router.route("/")
 router.get("/new", isloggedin, listingcontroller.rendernewform);
 
 // SEARCH ROUTE
-router.get("/search", async (req, res) => {
-  const query = req.query.q;
-  const alllisting = await Listing.find({
-    $or: [
-      { title: { $regex: query, $options: "i" } },
-      { description: { $regex: query, $options: "i" } },
-      { location: { $regex: query, $options: "i" } },
-      { price: isNaN(query) ? undefined : Number(query) }
-    ]
-  });
-
-  res.render("listing/index.ejs", { alllisting, q: query });
-});
-
+router.get("/search", wrapAsync(async (req, res) => {
+    const query = req.query.q;
+    const conditions = [];
+  
+    if (!query) {
+      return res.redirect("/listing");
+    }
+  
+    conditions.push({ title: { $regex: query, $options: "i" } });
+    conditions.push({ description: { $regex: query, $options: "i" } });
+    conditions.push({ location: { $regex: query, $options: "i" } });
+  
+    if (!isNaN(query)) {
+      conditions.push({ price: Number(query) });
+    }
+  
+    const alllisting = await Listing.find({ $or: conditions });
+  
+    res.render("listing/index.ejs", { alllisting, q: query });
+  }));
+  
 // PRIVACY ROUTE
 router.get("/privacy", (req, res) => {
   res.render("listing/privacy.ejs");
