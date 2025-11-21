@@ -1,7 +1,8 @@
+// routes/listing.js
 const express = require("express");
 const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync.js");
-const Listing = require("../model/listing.js");
+
 const { isloggedin, isowner, validatelisting } = require("../middleware.js");
 const listingcontroller = require("../controller/listings.js");
 
@@ -9,76 +10,45 @@ const multer = require("multer");
 const { storage } = require("../cloudConfig.js");
 const upload = multer({ storage });
 
-// -------------------------------
-// ROUTE: /
-// -------------------------------
+// INDEX + CREATE
 router.route("/")
-  // INDEX ROUTE
   .get(wrapAsync(listingcontroller.index))
-  
-  // CREATE ROUTE (MULTIPLE IMAGES)
   .post(
-    isloggedin, 
-    upload.array("listing[images]", 10),   // <-- UPDATED
+    isloggedin,
+    upload.array("listing[images]", 10),
     validatelisting,
     wrapAsync(listingcontroller.createlisting)
   );
 
-// NEW ROUTE
+// NEW
 router.get("/new", isloggedin, listingcontroller.rendernewform);
 
-// SEARCH ROUTE
-router.get("/search", wrapAsync(async (req, res) => {
-    const query = req.query.q;
-    const conditions = [];
-  
-    if (!query) {
-      return res.redirect("/listing");
-    }
-  
-    conditions.push({ title: { $regex: query, $options: "i" } });
-    conditions.push({ description: { $regex: query, $options: "i" } });
-    conditions.push({ location: { $regex: query, $options: "i" } });
-  
-    if (!isNaN(query)) {
-      conditions.push({ price: Number(query) });
-    }
-  
-    const alllisting = await Listing.find({ $or: conditions });
-  
-    res.render("listing/index.ejs", { alllisting, q: query });
-  }));
-  
-// PRIVACY ROUTE
+// SEARCH
+router.get("/search", wrapAsync(listingcontroller.searchListing));
+
+// PRIVACY
 router.get("/privacy", (req, res) => {
   res.render("listing/privacy.ejs");
 });
 
-// -------------------------------
-// ROUTE: /:id
-// -------------------------------
+// SHOW + UPDATE + DELETE
 router.route("/:id")
-  // SHOW ROUTE
   .get(wrapAsync(listingcontroller.showListing))
-  
-  // UPDATE ROUTE (MULTIPLE IMAGES + DELETE)
   .put(
     isloggedin,
     isowner,
-    upload.array("listing[images]", 10),   // <-- UPDATED
+    upload.array("listing[images]", 10),
     validatelisting,
     wrapAsync(listingcontroller.updatelisting)
   )
-
-  // DELETE ROUTE
   .delete(isloggedin, isowner, wrapAsync(listingcontroller.deletelisting));
 
-// BOOK ROUTE
+// BOOKING
 router.route("/:id/book")
   .get(isloggedin, wrapAsync(listingcontroller.booking))
   .post(wrapAsync(listingcontroller.booksucess));
 
-// EDIT ROUTE
+// EDIT
 router.get("/:id/edit", isloggedin, isowner, wrapAsync(listingcontroller.rendereditform));
 
 module.exports = router;

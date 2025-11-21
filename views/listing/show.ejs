@@ -2,143 +2,103 @@
 
 <div class="container mt-5">
 
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h2 class="mb-3"><%= listings.title %></h2>
-        </div>
-    </div>
+    <h2 class="text-center mb-4"><%= listings.title %></h2>
 
     <div class="card show-card col-md-8 mx-auto listing-card">
-        <div id="listingCarousel" class="carousel slide" data-bs-ride="carousel">
 
+        <!-- IMAGE CAROUSEL -->
+        <div id="listingCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <% listings.images.forEach((img, index) => { %>
                     <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
-                        <img src="<%= img.url %>" class="d-block w-100 rounded" alt="Image">
+                        <img src="<%= img.url %>" class="d-block w-100 rounded" alt="">
                     </div>
                 <% }) %>
             </div>
-        
-            <button class="carousel-control-prev" type="button" data-bs-target="#listingCarousel" data-bs-slide="prev">
+
+            <button class="carousel-control-prev" type="button"
+                    data-bs-target="#listingCarousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon"></span>
             </button>
-        
-            <button class="carousel-control-next" type="button" data-bs-target="#listingCarousel" data-bs-slide="next">
+
+            <button class="carousel-control-next" type="button"
+                    data-bs-target="#listingCarousel" data-bs-slide="next">
                 <span class="carousel-control-next-icon"></span>
             </button>
-        
+
             <div class="carousel-indicators">
                 <% listings.images.forEach((img, index) => { %>
                     <button type="button"
-                        data-bs-target="#listingCarousel"
-                        data-bs-slide-to="<%= index %>"
-                        class="<%= index === 0 ? 'active' : '' %>">
-                    </button>
+                            data-bs-target="#listingCarousel"
+                            data-bs-slide-to="<%= index %>"
+                            class="<%= index === 0 ? 'active' : '' %>"></button>
                 <% }) %>
             </div>
-        
         </div>
-        
+
         <dl class="form-control mt-3">
-            <p class="card-text">
-                <dt><i class="fa-solid fa-user"></i> Owned by:</dt>
-                <dd><i><%= listings.owner.username %></i></dd>
-            </p>
-            <p class="card-text">
-                <dt><i class="fa-solid fa-align-left"></i> Description:</dt>
-                <dd><%= listings.description %></dd>
-            </p>
-            <p class="card-text">
-                <dt><i class="fa-solid fa-indian-rupee-sign"></i> Price:</dt>
-                <dd>&#x20B9;<%= listings.price %></dd>
-            </p>
-            <p class="card-text">
-                <dt><i class="fa-solid fa-location-dot"></i> Location:</dt>
-                <dd><%= listings.location %></dd>
-            </p>
-            <p class="card-text">
-                <dt><i class="fa-solid fa-flag"></i> Country:</dt>
-                <dd><%= listings.country %></dd>
-            </p>
+            <dt>Owned by:</dt>
+            <dd><%= listings.owner.username %></dd>
+
+            <dt>Description:</dt>
+            <dd><%= listings.description %></dd>
+
+            <dt>Price:</dt>
+            <dd>&#8377;<%= listings.price %></dd>
+
+            <dt>Location:</dt>
+            <dd><%= listings.location %></dd>
+
+            <dt>Country:</dt>
+            <dd><%= listings.country %></dd>
         </dl>
 
         <% if (currUser && listings.owner._id.equals(currUser._id)) { %>
-           
-                <a href="/listing/<%= listings._id %>/edit" class="btn btn-outline-dark">Edit this Nest</a>
-                <div class="btns">
-                <form method="POST" action="/listing/<%= listings._id %>?_method=DELETE">
-                    <button class="btn btn-dark delete-btn ">Delete this Nest</button>
-                </form>
-            </div>
-            <% } %>
-                <form action="/listing/<%= listings._id %>/book">
-                    <button class="book">Book Now</button>
-                </form>
+            <a href="/listing/<%= listings._id %>/edit" class="btn btn-outline-dark">Edit</a>
 
-       
+            <form method="POST"
+                  action="/listing/<%= listings._id %>?_method=DELETE"
+                  class="d-inline">
+                <button class="btn btn-dark">Delete</button>
+            </form>
+        <% } %>
+
+        <form action="/listing/<%= listings._id %>/book" class="mt-3">
+            <button class="book btn btn-success">Book Now</button>
+        </form>
+
     </div>
 
+    <!-- REVIEWS SECTION -->
     <% if (currUser) { %>
         <div class="col-md-8 mx-auto mt-4">
             <hr>
             <h4>Leave a Review</h4>
-            <form action="/listing/<%= listings._id %>/reviews" method="post" novalidate class="needs-validation">
-                <fieldset class="starability-slot mb-3">
-                    <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked />
-                    <input type="radio" id="first-rate1" name="review[rating]" value="1" />
-                    <label for="first-rate1" title="Terrible">1 star</label>
-                    <input type="radio" id="first-rate2" name="review[rating]" value="2" />
-                    <label for="first-rate2" title="Not good">2 stars</label>
-                    <input type="radio" id="first-rate3" name="review[rating]" value="3" />
-                    <label for="first-rate3" title="Average">3 stars</label>
-                    <input type="radio" id="first-rate4" name="review[rating]" value="4" />
-                    <label for="first-rate4" title="Very good">4 stars</label>
-                    <input type="radio" id="first-rate5" name="review[rating]" value="5" />
-                    <label for="first-rate5" title="Amazing">5 stars</label>
-                </fieldset>
 
-                <div class="mb-3">
-                    <label for="comment" class="form-label">Comment</label>
-                    <textarea name="review[comment]" id="comment" cols="30" rows="4" class="form-control" required></textarea>
-                    <div class="invalid-feedback">Please submit some comments for review</div>
-                </div>
-
-                <button class="btn btn-outline-dark">Submit</button>
+            <form action="/listing/<%= listings._id %>/reviews" method="post">
+                <textarea name="review[comment]" class="form-control" required></textarea>
+                <button class="btn btn-outline-dark mt-2">Submit</button>
             </form>
         </div>
     <% } %>
 
     <% if (listings.reviews.length) { %>
         <div class="col-md-8 mx-auto mt-4">
-            <hr>
             <h4>All Reviews</h4>
-            <div class="row">
-                <% for (review of listings.reviews) { %>
-                    <div class="card col-md-5 ms-3 mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">@<%= review.author.username %></h5>
-                            <p class="card-text"><%= review.comment %></p>
-                            <p class="starability-result" data-rating="<%= review.rating %>">
-                                Rated: <%= review.rating %> star<%= review.rating > 1 ? 's' : '' %>
-                            </p>
-                            <% if (currUser && review.author._id.equals(currUser._id)) { %>
-                            <form class="mb-2" method="POST" action="/listing/<%= listings._id %>/reviews/<%= review._id %>?_method=DELETE">
-                                <button class="btn btn-sm btn-dark">Delete</button>
-                            </form>
-                          <% } %>
-                        </div>
-                    </div>
-                <% } %>
-            </div>
+            <% listings.reviews.forEach(review => { %>
+                <div class="card p-3 mb-3">
+                    <h5>@<%= review.author.username %></h5>
+                    <p><%= review.comment %></p>
+
+                    <% if (currUser && review.author._id.equals(currUser._id)) { %>
+                        <form method="POST"
+                              action="/listing/<%= listings._id %>/reviews/<%= review._id %>?_method=DELETE">
+                            <button class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    <% } %>
+                </div>
+            <% }) %>
         </div>
     <% } %>
 
-    <% if (listings.mapsrc) { %>
-        <div class="col-md-10 mx-auto mt-5">
-            <div class="ratio ratio-16x9">
-                <iframe src="<%= listings.mapsrc %>" style="border:0;" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-        </div>
-    <% } %>
 </div>
