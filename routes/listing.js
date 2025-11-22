@@ -24,7 +24,7 @@ router.route("/")
 router.get("/new", isloggedin, listingcontroller.rendernewform);
 
 // SEARCH
-router.get("/search", wrapAsync(listingcontroller.searchListing));
+router.get("/search", wrapAsync(listingcontroller.searchListing));  // FIXED (function must exist)
 
 // PRIVACY
 router.get("/privacy", (req, res) => {
