@@ -1,67 +1,64 @@
 <% layout('layout/biolerplate') %>
 
-
-    <div class="row mt-3">
-        <div class="col-8 offset-2 ">
+<div class="row mt-3">
+    <div class="col-8 offset-2">
            
-            <h3>Post a New Nest</h3>
+        <h3>Post a New Nest</h3>
 
-            <form method="post" action="/listing" novalidate class="needs-validation" enctype="multipart/form-data">
+        <form method="post" action="/listing" novalidate class="needs-validation" enctype="multipart/form-data">
 
-                <div class="mb-3">
-                    <label for="title" class="form-label">Title</label>
-                    <input name="listing[title]" placeholder="Add a Catchy Title" type="text" class="form-control" required>
-                    <div class="invalid-feedback">Title should be valid!</div>
-                </div>
+            <div class="mb-3">
+                <label class="form-label">Title</label>
+                <input name="listing[title]" placeholder="Add a Catchy Title" type="text" class="form-control" required>
+                <div class="invalid-feedback">Title should be valid!</div>
+            </div>
     
-                <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
-                    <textarea name="listing[description]" class="form-control" required></textarea>
-                    <div class="invalid-feedback">Description should be valid!</div>
-                </div>
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea name="listing[description]" class="form-control" required></textarea>
+                <div class="invalid-feedback">Description should be valid!</div>
+            </div>
 
-                <div class="mb-3">
-                    <label for="images" class="form-label">Upload Nest Images</label>
-                    <input 
-                        name="listing[images]" 
-                        type="file" 
-                        class="form-control"
-                        multiple
-                        required
-                    >
-                    <small class="text-muted">You can upload multiple images for your listing.</small>
-                </div>
+            <div class="mb-3">
+                <label class="form-label">Upload Nest Images</label>
+                <input 
+                    name="listing[images]" 
+                    type="file" 
+                    class="form-control"
+                    multiple
+                    required
+                >
+                <small class="text-muted">You can upload multiple images for your listing.</small>
+            </div>
     
-                <div class="row">
-                    <div class="mb-3 col-md-4">
-                        <label for="price" class="form-label">Price</label>
-                        <input name="listing[price]" placeholder="1200" type="number" class="form-control" required>
-                        <div class="invalid-feedback">Price should be valid!</div>
-                    </div>
-
-                    <div class="mb-3 col-md-8">
-                        <label for="location" class="form-label">Location</label>
-                        <input name="listing[location]" placeholder="Jaipur, Rajasthan" type="text" class="form-control" required>
-                        <div class="invalid-feedback">Location should be valid!</div>
-                    </div>
+            <div class="row">
+                <div class="mb-3 col-md-4">
+                    <label class="form-label">Price</label>
+                    <input name="listing[price]" placeholder="1200" type="number" class="form-control" required>
+                    <div class="invalid-feedback">Price should be valid!</div>
                 </div>
 
-                <div class="mb-3">
-                    <label for="country" class="form-label">Country</label>
-                    <input name="listing[country]" placeholder="India" type="text" class="form-control" required>
-                    <div class="invalid-feedback">Country should be valid!</div>
+                <div class="mb-3 col-md-8">
+                    <label class="form-label">Location</label>
+                    <input name="listing[location]" placeholder="Jaipur, Rajasthan" type="text" class="form-control" required>
+                    <div class="invalid-feedback">Location should be valid!</div>
                 </div>
+            </div>
 
-                <div class="mb-3">
-                    <label for="mapsrc" class="form-label">Enter Map Source Code</label>
-                    <input name="listing[mapsrc]" placeholder="Enter Location Url/Link" type="url" class="form-control" required>
-                </div>
+            <div class="mb-3">
+                <label class="form-label">Country</label>
+                <input name="listing[country]" placeholder="India" type="text" class="form-control" required>
+                <div class="invalid-feedback">Country should be valid!</div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Enter Map Source Code</label>
+                <input name="listing[mapsrc]" placeholder="Enter Map URL" type="url" class="form-control" required>
+            </div>
         
-                <button class="btn btn-dark add-btn mt-3">Add</button>
+            <button class="btn btn-dark add-btn mt-3">Add</button>
 
-            </form>
+        </form>
 
-        </div>
     </div>
-
-
+</div>
