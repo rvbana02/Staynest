@@ -1,62 +1,72 @@
 <% layout("layout/biolerplate") %>
 
-<h3>Edit your Nest</h3>
+<div class="row mt-3">
+    <div class="col-8 offset-2"> 
+        <h3>Edit your Nest</h3>
 
-<form method="post"
-      action="/listing/<%= listings._id %>?_method=put"
-      enctype="multipart/form-data">
+        <form method="post" action="/listing/<%= listings._id %>?_method=put"
+              novalidate class="needs-validation"
+              enctype="multipart/form-data">
 
-    <div class="mb-3">
-        <label>Title</label>
-        <input name="listing[title]" value="<%= listings.title %>" class="form-control">
-    </div>
+            <div class="mb-3">
+                <label class="form-label">Title</label>
+                <input name="listing[title]" value="<%= listings.title %>" type="text" class="form-control" required>
+            </div>
 
-    <div class="mb-3">
-        <label>Description</label>
-        <textarea name="listing[description]" class="form-control"><%= listings.description %></textarea>
-    </div>
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea name="listing[description]" class="form-control" required><%= listings.description %></textarea> 
+            </div>
 
-    <!-- Existing Images -->
-    <div class="mb-3">
-        <label>Current Images</label>
-        <div class="row">
-            <% listings.images.forEach(img => { %>
-                <div class="col-4 mb-3">
-                    <img src="<%= img.url %>" class="img-fluid rounded">
-
-                    <input type="checkbox"
-                           name="deleteImages"
-                           value="<%= img.filename %>"> Delete
+            <div class="mb-3">
+                <label class="form-label">Current Images</label>
+                <div class="row">
+                    <% listings.images.forEach(img => { %>
+                        <div class="col-4 mb-3">
+                            <img src="<%= img.url %>" class="img-fluid rounded">
+                            <div class="form-check mt-2">
+                                <input class="form-check-input" 
+                                       type="checkbox" 
+                                       name="deleteImages" 
+                                       value="<%= img.filename %>">
+                                <label class="form-check-label">
+                                    Delete this image
+                                </label>
+                            </div>
+                        </div>
+                    <% }) %>
                 </div>
-            <% }) %>
-        </div>
-    </div>
+            </div>
 
-    <!-- Upload New -->
-    <div class="mb-3">
-        <label>Upload More Images</label>
-        <input type="file" name="listing[images]" multiple class="form-control">
-    </div>
+            <div class="mb-3">
+                <label class="form-label">Upload Additional Images</label>
+                <input name="listing[images]" type="file" class="form-control" multiple>
+            </div>
 
-    <div class="mb-3">
-        <label>Price</label>
-        <input name="listing[price]" value="<%= listings.price %>" class="form-control">
-    </div>
+            <div class="row">
+                <div class="mb-3 col-md-4">
+                    <label class="form-label">Price</label>
+                    <input name="listing[price]" value="<%= listings.price %>" class="form-control" required>
+                </div>
 
-    <div class="mb-3">
-        <label>Location</label>
-        <input name="listing[location]" value="<%= listings.location %>" class="form-control">
-    </div>
+                <div class="mb-3 col-md-8">
+                    <label class="form-label">Location</label>
+                    <input name="listing[location]" value="<%= listings.location %>" type="text" class="form-control" required>
+                </div>
+            </div>
 
-    <div class="mb-3">
-        <label>Country</label>
-        <input name="listing[country]" value="<%= listings.country %>" class="form-control">
-    </div>
+            <div class="mb-3">
+                <label class="form-label">Country</label>
+                <input name="listing[country]" value="<%= listings.country %>" type="text" class="form-control" required>
+            </div>
 
-    <div class="mb-3">
-        <label>Map Source Code</label>
-        <input name="listing[mapsrc]" value="<%= listings.mapsrc %>" class="form-control">
-    </div>
+            <div class="mb-3">
+                <label class="form-label">Enter Map Source Code</label>
+                <input name="listing[mapsrc]" value="<%= listings.mapsrc %>" type="url" class="form-control" required>
+            </div>
 
-    <button class="btn btn-dark">Update</button>
-</form>
+            <button class="btn btn-dark mt-3">Save Changes</button>
+
+        </form>
+    </div>
+</div>
