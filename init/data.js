@@ -2,7 +2,7 @@ const sampleListing =[
     {
 title : "Cozy Beachfront Cottage",
 description:"Escape to this charming beachfront cottage for a relaxing gateway.",
-Image:"https://cf.bstatic.com/xdata/images/hotel/max1024x768/428595831.jpg?k=06eead1029855943a692750502666eefa4d96863a355e8f32b30f0dbc543630f&o=&hp=1",
+image:"https://cf.bstatic.com/xdata/images/hotel/max1024x768/428595831.jpg?k=06eead1029855943a692750502666eefa4d96863a355e8f32b30f0dbc543630f&o=&hp=1",
 price:1500,
 location:"Malibu",
 country:"united states",
@@ -12,7 +12,7 @@ mapsrc:"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115548.30165576971
     {
         title:"Modern loft in downtown",
         description:"stay in the heart of the  city in this stylish loft apartment.",
-        Image:{
+        image:{
             filename:"listingimage",
           url:  "https://cf.bstatic.com/xdata/images/hotel/max1024x768/412333525.jpg?k=f3086a8135bc7627a926bf4af41276de1087b8741c8222472723311640c91e1f&o=&hp=1",
          },
@@ -25,7 +25,7 @@ mapsrc:"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115548.30165576971
     {
         title:"Mountain Retreat",
         description:"unplug and unwind in this peaceful cabin surrounded by nature.",
-        Image:{
+        image:{
            filename:"listingimage",
            url: "https://www.christiesrealestate.com/blog/wp-content/uploads/2019/02/Aspen_property_CastleCreek_banner-1600x550.jpg?is-pending-load=1https://images.stockcake.com/public/d/2/8/d28d8e7f-1188-44d7-b680-9470a75bc553_large/luxurious-mountain-retreat-stockcake.jpg",
         },
@@ -37,7 +37,7 @@ mapsrc:"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115548.30165576971
     {
         title:"Historic villa in Tuscany",
         description:"Located near historic towns like Florence, Siena, and Lucca, this villa serves as an idyllic retreat for those seeking cultural exploration, culinary delights, and the essence of la dolce vita.",
-        Image:{
+        image:{
             filename:"listingimage",
             url:"https://imageio.forbes.com/specials-images/imageserve/5d794057c0e1890008d1238c/0x0.jpg?format=jpg&height=900&width=1600&fit=bounds",
         },
@@ -50,7 +50,7 @@ mapsrc:"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115548.30165576971
         {
             title:"Desert oasis in Dubai",
             description:"experience luxury at the middle of the desert",
-            Image:{
+            image:{
                 filename:"listingimage",
                 url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9QNHwJXqdoiwCYRjX5BFaiUPAGe-GlJvzxQ&s",
             },
@@ -64,7 +64,7 @@ mapsrc:"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115548.30165576971
         {
             title:"Rustic log cabin in Montana",
             description:"surrounded in natural beauty.",
-            Image:{
+            image:{
                 filename:"listingimage",
                 url:"https://onekindesign.com/wp-content/uploads/2015/05/The-Tunken-Pioneer-Log-Homes-01-1-Kindesign.jpg",
             },
@@ -78,7 +78,7 @@ mapsrc:"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115548.30165576971
             {
             title:"seculed beach house in costa rica",
             description:"escape to a secluded beach house on the pacific coast of costa rica.",
-            Image:"https://www.villascostarica.com/wp-content/uploads/2018/10/156_fl209.jpg",
+            image:"https://www.villascostarica.com/wp-content/uploads/2018/10/156_fl209.jpg",
             price:1800,
             location:"costa rica",
             country:"costa rica",
