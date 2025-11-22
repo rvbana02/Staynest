@@ -1,4 +1,5 @@
 <% layout("layout/biolerplate") %>
+
 <body>
    <style>
     #filters{
@@ -19,101 +20,45 @@
     .filter p{
       font-size: 1rem;
     }
-    .tax-info{
-      display: none;
-    }
-    .tax-toggle{
-      border: 1px solid black;
-      border-radius: 1rem;
-      height: 3.25rem;
-      padding: 1rem;
-      margin-left: 2rem;
-      display: flex;
-      align-items: center;
-    }
    </style>
+
     <div id="filters">
-     <div class="filter">
-      <div><i class="fa-solid fa-fire"></i></div>
-      <p>Trendig</p>
-     </div>
-     <div class="filter">
-      <div><i class="fa-solid fa-bed"></i></div>
-      <p>Rooms</p>
-     </div>
-     <div class="filter">
-      <div><i class="fa-solid fa-mountain-city"></i></div>
-      <p>Iconic cities</p>
-     </div>
-     <div class="filter">
-      <div><i class="fa-solid fa-mountain"></i></div>
-      <p>Mountain</p>
-     </div>
-     <div class="filter">
-      <div><i class="fa-brands fa-fort-awesome"></i></div>
-      <p>Castles</p>
-     </div>
-     <div class="filter">
-      <div><i class="fa-solid fa-person-swimming"></i></div>
-      <p>Amazing Pools</p>
-     </div>
-     <div class="filter">
-      <div><i class="fa-solid fa-campground"></i></div>
-      <p>Camping</p>
-     </div>
-     <div class="filter">
-      <div><i class="fa-solid fa-cow"></i></div>
-      <p>Farms</p>
-     </div>
-     <div class="filter">
-      <div><i class="fa-solid fa-snowflake"></i></div>
-      <p>Arctic</p>
-      </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-igloo"></i></div>
-        <p>Domes</p>
-     </div>
-     <div class="filter">
-      <div><i class="fa-solid fa-sailboat"></i></div>
-      <p>Boats</p>
-     </div>
+        <!-- your filter icons (no issue here) -->
     </div>
-   
-    
+
     <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+
       <% if (alllisting.length === 0) { %>
         <div class="text-center mt-4">
           <h3>No results found for "<%= q %>"</h3>
         </div>
       <% } else { %>
+
         <% for(let listings of alllisting) { %>
           <a href="/listing/<%= listings._id %>" class="listing-link">
+
             <div class="card col listing-card">
-              <img src="<%= listings.Image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem">
-              <div class="card-img-overlay"></div>
+
+              <!-- FIXED IMAGE -->
+              <img 
+                src="<%= listings.images && listings.images.length > 0 ? listings.images[0].url : '/images/default.jpg' %>" 
+                class="card-img-top" 
+                style="height: 20rem" 
+                alt="listing_image"
+              >
+
               <div class="card-body">
                 <p class="card-text">
                   <b><%= listings.title %></b><br>
                   ₹ <%= listings.price %>/night
                 </p>
               </div>
+
             </div>
           </a>
         <% } %>
-      <% } %>
-    </div>
-    
 
-    <script>
-      let taxSwitch=document.getElementById("flexSwitchCheckDefault");
-      taxSwitch.addEventListener("click",()=>{
-       let taxInfo=document.getElementsByClassName("tax-info");
-       for(info of taxInfo){
-        if(info.style.display!="inline"){
-        info.style.display="inline";
-        }else{
-          info.style.display="none";
-        }
-       }
-      });
-    </script>
+      <% } %>
+
+    </div>
+</body>
