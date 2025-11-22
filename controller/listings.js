@@ -10,22 +10,23 @@ module.exports.index = async (req, res) => {
 
 // SEARCH
 module.exports.searchListing = async (req, res) => {
-    const query = req.query.q;
-    if (!query) return res.redirect("/listing");
+  const query = req.query.q;
 
-    const conditions = [
-        { title: { $regex: query, $options: "i" } },
-        { description: { $regex: query, $options: "i" } },
-        { location: { $regex: query, $options: "i" } }
-    ];
+  if (!query) {
+    return res.redirect("/listing");
+  }
 
-    if (!isNaN(query)) {
-        conditions.push({ price: Number(query) });
-    }
+  const alllisting = await Listing.find({
+    $or: [
+      { title: { $regex: query, $options: "i" } },
+      { description: { $regex: query, $options: "i" } },
+      { location: { $regex: query, $options: "i" } }
+    ]
+  });
 
-    const alllisting = await Listing.find({ $or: conditions });
-    res.render("listing/index.ejs", { alllisting, q: query });
+  res.render("listing/index.ejs", { alllisting, q: query });
 };
+
 
 // NEW FORM
 module.exports.rendernewform = (req, res) => {
